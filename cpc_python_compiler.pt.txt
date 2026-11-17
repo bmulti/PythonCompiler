@@ -1,0 +1,71 @@
+[intro]
+Python Compiler transforma programas Python em programas do Windows com o PyInstaller, testa-os e publica-os. Segue este fluxo:
+
+Code Browser ou Gateway Apps (o código-fonte Python) > Temp Compile (os ficheiros de compilação e teste) > Outputs (testar e depois publicar) > Compile Apps (as aplicações concluídas, o menu Iniciar e a nova entrada do Gateway).
+
+Code Browser compila ficheiros Python de qualquer pasta. Gateway Apps compila as aplicações listadas no ficheiro gateway (gateway.json). Ambas as listas permitem consultar o código com o botão direito do rato. Outputs testa o que foi criado e publica-o. Log regista tudo o que acontece. A linha na parte inferior da janela mostra sempre a última ação e o respetivo resultado, a tarefa em execução e os botões Cancel.
+
+A compilação é uma tarefa em lote executada em segundo plano, pelo que a janela continua utilizável. Prima Compile novamente enquanto uma tarefa está em execução e a nova tarefa entra na fila.
+
+Comece em Code Browser: escolha uma pasta, selecione um ficheiro Python e prima Compile Selected. Em seguida, abra Outputs para experimentar o resultado e publique-o quando estiver satisfeito. Defina as pastas em Config. Clique em qualquer título de Notes para abrir o separador correspondente.
+
+[tab:code-browser]
+Compile ficheiros Python diretamente a partir de uma pasta. Folder mostra a pasta atual. Introduza um caminho ou escolha uma das pastas recentes na lista pendente. Browse... escolhe uma pasta, Up abre a pasta principal, Default regressa à pasta predefinida definida em Config e Refresh volta a ler a pasta. Apenas são apresentados os ficheiros diretamente dentro da pasta. Cada pasta aberta é automaticamente adicionada à lista de recentes.
+
+Compile Selected compila os ficheiros selecionados. Compile All Shown compila todos os ficheiros da lista; por isso, utilize primeiro Search para restringir a lista. One File empacota cada programa num único ficheiro exe, Windowed oculta a janela da consola, Clean remove primeiro os ficheiros de compilação antigos do PyInstaller e No UPX ignora a etapa de compressão UPX, que é lenta e muitas vezes apenas produz avisos. Estas quatro opções também são partilhadas com Gateway Apps. Apenas são compilados ficheiros .py e .pyw. Cada pressão cria uma tarefa: se outra tarefa estiver em execução, aguarda a sua vez. Cancel Job interrompe a tarefa em execução e Cancel All também limpa a fila.
+
+Introduza texto em Search para mostrar apenas os ficheiros cujos nomes contêm esse texto; X limpa a caixa. A opção .py / .pyw only oculta outros tipos de ficheiros. A lista mostra o nome do ficheiro, as datas de criação e da última modificação e o tamanho. O ficheiro alterado mais recentemente aparece no topo; clique no título de uma coluna para alterar a ordenação.
+
+Se existir um ficheiro de ajuda em inglês junto de um ficheiro Python (name.en.txt, ou o nome sem o prefixo cpc_), esse ficheiro é incorporado no exe, pelo que o separador Notes do programa compilado contém sempre o texto em inglês. O registo de compilação mostra "Embedding help".
+
+Clique com o botão direito num ficheiro para ver o código. Abre-se uma janela com o código e os números das linhas. Copy All copia todo o texto, Open File abre o ficheiro no editor habitual e Close (ou a tecla Esc) fecha a janela. Um ficheiro com mais de 1 MB mostra apenas o primeiro megabyte; os ficheiros binários não são apresentados. A pré-visualização não pode alterar o ficheiro.
+
+Os botões CSV e HTML no canto superior direito exportam os ficheiros apresentados, pela ordem mostrada. Um ficheiro nunca é substituído; se o nome já existir, a data e a hora são acrescentadas ao novo nome.
+
+[tab:gateway-apps]
+Compile as aplicações listadas no ficheiro gateway (gateway.json). Apenas são apresentados ficheiros Python (.py e .pyw). Reload Gateway volta a ler o ficheiro e Project limita a lista a um projeto ou a All.
+
+Selecione uma ou mais aplicações e prima Compile Selected. Compile All Shown compila todas as aplicações atualmente apresentadas na lista. One File, Windowed, Clean e No UPX funcionam como em Code Browser. Cada compilação é guardada na sua própria pasta, dentro da raiz de saída Temp Compile definida em Config.
+
+Clique no título de uma coluna para ordenar. Clique com o botão direito numa aplicação para ver o respetivo código. Os botões CSV e HTML no canto superior direito exportam a lista exatamente como é apresentada, incluindo a ordem de classificação.
+
+[tab:log]
+Registo de todas as tarefas: quando foram colocadas na fila e iniciadas, a saída do PyInstaller de cada aplicação (com avanço), o tempo que cada aplicação demorou e o resultado. As linhas são identificadas pelo número da tarefa, como [Job 3 2/5], que significa a segunda de cinco aplicações na tarefa 3.
+
+Cada tarefa também é guardada no seu próprio ficheiro de registo na pasta logs, dentro da raiz de saída Temp Compile; o caminho é apresentado quando a tarefa termina. Clear Log limpa apenas a janela. A janela mantém as 5000 linhas mais recentes.
+
+[tab:outputs]
+A tabela apresenta o que foi compilado nesta sessão, a partir de Code Browser ou Gateway Apps: a aplicação, o respetivo código-fonte Python, o executável resultante, o resultado (Queued, Running, Compiled, Failed ou Cancelled) e o local onde foi publicado. As linhas são atualizadas durante a execução da tarefa e a ordenação escolhida é mantida.
+
+Test Selected PY executa o código-fonte Python e Test Selected EXE executa o programa compilado a partir de Temp Compile. Utilizam as linhas selecionadas aqui; se nenhuma estiver selecionada, utilizam os ficheiros selecionados na última lista utilizada. Open Temp Compile mostra a pasta de compilação no gestor de ficheiros e Clear Results limpa a tabela. Os botões CSV e HTML exportam-na.
+
+Teste primeiro o exe e depois publique-o. Ambos os botões de publicação funcionam nas linhas selecionadas com o estado Compiled. Cada um copia primeiro a aplicação para a sua própria pasta em Compile Apps, juntamente com o exe e o respetivo ficheiro json de definições. O ficheiro json de definições só é copiado da pasta do ficheiro Python se a aplicação ainda não tiver um nessa localização; assim, as definições que já alterou nunca são substituídas. Os ficheiros de ajuda noutros idiomas (name.fr.txt e assim por diante) são copiados para junto do exe da mesma forma. São externos de propósito, para que possa adicionar ou corrigir um idioma sem voltar a compilar. O ficheiro de ajuda em inglês não é copiado porque está incorporado no exe. Depois:
+
+Update Gateway substitui o ficheiro Python em gateway.json pela ligação ao exe copiado. Primeiro pede confirmação, mantém uma cópia de segurança chamada gateway.json.bak e adiciona uma entrada se a aplicação ainda não estiver no ficheiro. O código-fonte Python é mantido na entrada como source_py, para que a aplicação continue em Gateway Apps e possa ser compilada novamente.
+
+Add Start Menu adiciona ao menu Iniciar um atalho para o exe copiado. O atalho tem o nome da aplicação (app_name na entrada gateway, ou o nome do ficheiro para um ficheiro proveniente de Code Browser) e é colocado na pasta do menu Iniciar definida em Config. Se o atalho já existir, é atualizado.
+
+Execute-os novamente após uma nova compilação para atualizar as mesmas entradas. Se a cópia falhar, feche a aplicação em execução e tente novamente. São executados como tarefas, tal como a compilação, pelo que ficam na fila atrás de uma compilação em curso. Open Compile Apps mostra a pasta Compile Apps.
+
+[tab:config]
+Config segue o fluxo do programa, de cima para baixo. Save Settings, na parte inferior, grava todas as definições no ficheiro de definições e mostra onde foram guardadas.
+
+Code Browser (pastas diretas): Default folder é a pasta que Code Browser abre primeiro. Browse... escolhe-a e Use Current utiliza a pasta que Code Browser está a mostrar neste momento. Recent folders lista as pastas utilizadas, da mais recente para a mais antiga, e mantém as últimas 15. Todas as pastas abertas em Code Browser são adicionadas automaticamente. Introduza ou escolha uma pasta e prima Add para a adicionar à lista, Remove para a retirar ou Open para a mostrar em Code Browser.
+
+Gateway (lista de origem): o ficheiro que lista as aplicações de Gateway Apps. Browse... escolhe-o, Default regressa a gateway.json na pasta do programa e Reload volta a lê-lo. Aqui não é feita qualquer compilação nem cópia.
+
+Temp Compile: Output root é a localização das pastas build, dist e spec e dos registos das tarefas, com uma pasta por aplicação. São ficheiros temporários para testes, não a aplicação concluída. Python (PyInstaller) é o python.exe utilizado para executar o PyInstaller e os testes Python. Só é necessário quando este programa é, ele próprio, um exe, porque um exe não consegue executar o PyInstaller. Deixe vazio para utilizar o Python encontrado em PATH.
+
+Compile Apps: Apps folder é a pasta onde ficam as aplicações concluídas, cada uma na sua própria pasta com o exe e o ficheiro json de definições. O atalho do menu Iniciar e a nova entrada gateway apontam para esta cópia. Start Menu folder é o nome da pasta onde os atalhos são adicionados. Quando escolhe uma nova pasta Apps com Browse..., é-lhe perguntado se também pretende manter aí o ficheiro de definições.
+
+Quando este programa é, ele próprio, um exe, a ajuda em inglês está incorporada. No primeiro arranque, é colocada uma cópia junto do exe para poder ser editada; nunca é substituída e, se for eliminada, o texto incorporado volta a aparecer. A ajuda noutros idiomas é um ficheiro simples junto do exe.
+
+Settings file: mostra onde são guardadas as definições deste programa (python_compiler.json). Inicialmente ficam na mesma pasta do programa (o exe ou este script), nunca numa pasta temporária. Browse... escolhe outra pasta, Use Apps Folder move-as para a pasta Compile Apps e Default devolve-as à pasta do programa. As definições atuais são guardadas na nova localização e a pasta do programa mantém uma pequena nota que indica onde estão, para que o programa as encontre no arranque seguinte. A cópia antiga permanece onde estava. Se a pasta das definições não estiver disponível no arranque (por exemplo, uma unidade de rede), são utilizadas as definições predefinidas e a nota é mantida.
+
+As cores, a densidade e o tamanho da janela estão em UI Choices.
+
+[tab:ui-choices]
+Escolha o tema de cores, a densidade e o tamanho da janela. Use Current Size utiliza o tamanho atual da janela e Apply + Save aplica e guarda as suas escolhas. As listas seguem o tema escolhido. Estas definições controlam o aspeto da aplicação. As pastas e as opções pertencem a Config.
+
+[tab:gateway]
+Utilize o iniciador partilhado para abrir aplicações, ficheiros, pastas e ligações registados. Guarda os seus cartões em gateway_cards.json na pasta do programa. Gateway é separado do ficheiro gateway que fornece a lista Gateway Apps.

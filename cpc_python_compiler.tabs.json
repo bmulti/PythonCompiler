@@ -1,0 +1,37 @@
+{
+  "app_name": "cpc_python_compiler",
+  "tabs": [
+    {
+      "id": "code-browser",
+      "label": "Code Browser"
+    },
+    {
+      "id": "gateway-apps",
+      "label": "Gateway Apps"
+    },
+    {
+      "id": "log",
+      "label": "Log"
+    },
+    {
+      "id": "outputs",
+      "label": "Outputs"
+    },
+    {
+      "id": "config",
+      "label": "Config"
+    },
+    {
+      "id": "ui-choices",
+      "label": "UI Choices"
+    },
+    {
+      "id": "gateway",
+      "label": "Gateway"
+    },
+    {
+      "id": "about",
+      "label": "About"
+    }
+  ]
+}

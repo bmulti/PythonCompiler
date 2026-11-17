@@ -1,0 +1,48 @@
+[intro]
+Python Compiler 使用 PyInstaller 将 Python 程序转换为 Windows 程序、进行测试并发布。工作流程如下：
+Code Browser 或 Gateway Apps（Python 源代码）> Temp Compile（构建和测试文件）> Outputs（先测试，再发布）> Compile Apps（已完成的应用程序、开始菜单和新的 Gateway 条目）。
+Code Browser 可以编译任何文件夹中的 Python 文件。Gateway Apps 编译 gateway 文件（gateway.json）中列出的应用程序。两个列表都可以通过右键单击查看代码。Outputs 测试构建结果并发布。Log 记录所有操作。窗口底部的状态行始终显示最近的操作及其结果、正在运行的任务以及 Cancel 按钮。
+编译是一个在后台运行的批处理任务，因此窗口仍可使用。任务运行期间再次按 Compile，新任务就会加入队列。
+从 Code Browser 开始：选择文件夹，选择一个 Python 文件，然后按 Compile Selected。接着打开 Outputs 试运行结果，满意后再发布。在 Config 中设置文件夹。单击任意 Notes 标题即可打开对应的选项卡。
+
+[tab:code-browser]
+直接从文件夹编译 Python 文件。Folder 显示当前文件夹。输入路径，或从下拉列表中选择最近使用的文件夹。Browse... 用于选择文件夹，Up 打开上一级文件夹，Default 返回 Config 中设置的默认文件夹，Refresh 重新读取文件夹。列表只显示该文件夹内的文件，不包括子文件夹中的文件。每个打开过的文件夹都会自动加入最近使用列表。
+Compile Selected 编译所选文件。Compile All Shown 编译列表中的所有文件，因此请先使用 Search 缩小列表范围。One File 将每个程序打包成一个 exe 文件；Windowed 隐藏控制台窗口；Clean 先删除 PyInstaller 的旧构建文件；No UPX 跳过 UPX 压缩步骤，该步骤速度较慢，而且通常只会产生警告。这四个选项也适用于 Gateway Apps。只编译 .py 和 .pyw 文件。每次按下按钮都会创建一个任务：如果另一个任务正在运行，新任务就会等待。Cancel Job 停止正在运行的任务；Cancel All 还会清空队列。
+在 Search 中输入文字，只显示文件名包含该文字的文件；X 清空输入框。.py / .pyw only 复选框隐藏其他类型的文件。列表显示文件名、创建日期、最后修改日期和大小。最近修改的文件显示在最上方；单击列标题可以更改排序方式。
+如果 Python 文件旁边有英文帮助文件（name.en.txt，或不带 cpc_ 前缀的文件名），该文件会嵌入 exe，因此编译后程序的 Notes 选项卡始终包含英文文本。编译日志会显示 "Embedding help"。
+右键单击文件即可查看代码。窗口中会显示代码和行号。Copy All 复制全部文本，Open File 使用常用编辑器打开文件，Close（或 Esc 键）关闭窗口。超过 1 MB 的文件只显示前 1 MB；不显示二进制文件。预览功能不会修改文件。
+右上角的 CSV 和 HTML 按钮按当前显示顺序导出文件列表。文件不会被覆盖；如果名称已存在，新文件名会附加日期和时间。
+
+[tab:gateway-apps]
+编译 gateway 文件（gateway.json）中列出的应用程序。只显示 Python 文件（.py 和 .pyw）。Reload Gateway 重新读取该文件；Project 将列表限制为一个项目，或选择 All。
+选择一个或多个应用程序，然后按 Compile Selected。Compile All Shown 编译当前列表中的所有应用程序。One File、Windowed、Clean 和 No UPX 的功能与 Code Browser 中相同。每次编译都会在 Config 中设置的 Temp Compile 输出根目录下创建独立文件夹。
+单击列标题进行排序。右键单击应用程序可查看代码。右上角的 CSV 和 HTML 按钮会按照列表当前显示的内容和排序顺序导出列表。
+
+[tab:log]
+记录每个任务的完整过程：任务进入队列和开始运行的时间、每个应用程序的 PyInstaller 输出（带缩进）、每个应用程序耗费的时间以及结果。每行都标有任务编号，例如 [Job 3 2/5] 表示任务 3 中五个应用程序里的第二个。
+每个任务还会单独保存为日志文件，位于 Temp Compile 输出根目录下的 logs 文件夹中。任务结束时会显示日志文件路径。Clear Log 只清空窗口。窗口保留最新的 5000 行。
+
+[tab:outputs]
+此表列出本次会话中从 Code Browser 或 Gateway Apps 编译的内容：应用程序、其 Python 源文件、生成的可执行文件、结果（Queued、Running、Compiled、Failed 或 Cancelled）以及发布位置。任务运行时表格行会更新，并保留当前排序方式。
+Test Selected PY 运行 Python 源代码；Test Selected EXE 运行 Temp Compile 中编译出的程序。它们使用此处选中的行；如果没有选中任何行，则使用最近一次所用列表中选中的文件。Open Temp Compile 在文件管理器中打开构建文件夹，Clear Results 清空表格。CSV 和 HTML 按钮可导出表格。
+先测试 exe，再发布。两个发布按钮都只处理结果为 Compiled 的选中行。每个按钮都会先将应用程序复制到 Compile Apps 中自己的文件夹，并复制 exe 和设置 json 文件。只有当应用程序旁边还没有设置 json 文件时，才会从 Python 文件旁边复制该文件，因此已经修改过的设置不会被覆盖。其他语言的帮助文件（name.fr.txt 等）也会以相同方式复制到 exe 旁边。这些文件特意保持为外部文件，因此无需重新编译即可添加或修正语言。英文帮助文件不会复制，因为它已嵌入 exe。然后：
+Update Gateway 将 gateway.json 中的 Python 文件替换为指向已复制 exe 的链接。操作前会请求确认，保留名为 gateway.json.bak 的备份；如果文件中还没有该应用程序，则添加一个条目。Python 源代码以 source_py 的名称保留在条目中，因此应用程序仍会显示在 Gateway Apps 中，并可再次编译。
+Add Start Menu 会在开始菜单中为已复制的 exe 添加快捷方式。快捷方式以应用程序命名（gateway 条目中的 app_name；如果文件来自 Code Browser，则使用文件名），并放在 Config 中设置的开始菜单文件夹内。如果快捷方式已经存在，就会更新它。
+新构建完成后再次运行这些操作，以更新相同条目。如果复制失败，请关闭正在运行的应用程序后重试。这些操作与编译一样作为任务运行，因此会排在正在运行的编译任务之后。Open Compile Apps 打开 Compile Apps 文件夹。
+
+[tab:config]
+Config 按照程序的工作流程从上到下排列。底部的 Save Settings 会将所有设置写入设置文件，并显示保存位置。
+Code Browser（普通文件夹）：Default folder 是 Code Browser 首次打开的文件夹。Browse... 用于选择文件夹，Use Current 使用 Code Browser 当前显示的文件夹。Recent folders 按从新到旧的顺序列出已使用的文件夹，并保留最近 15 个。在 Code Browser 中打开的每个文件夹都会自动添加。输入或选择文件夹后，按 Add 将其加入列表，按 Remove 将其移除，或按 Open 在 Code Browser 中打开。
+Gateway（源文件列表）：此文件列出 Gateway Apps 中的应用程序。Browse... 用于选择文件，Default 返回程序文件夹中的 gateway.json，Reload 重新读取文件。此处不会编译或复制任何内容。
+Temp Compile：Output root 是 build、dist、spec 文件夹和任务日志的存放位置，每个应用程序各有一个文件夹。这些是用于测试的临时文件，不是最终应用程序。Python (PyInstaller) 是用于运行 PyInstaller 和 Python 测试的 python.exe。只有当本程序本身是 exe 时才需要它，因为 exe 无法运行 PyInstaller。留空则使用 PATH 中找到的 Python。
+Compile Apps：Apps folder 是最终应用程序的存放位置，每个应用程序都有自己的文件夹，其中包含 exe 和设置 json。开始菜单快捷方式和新的 gateway 条目都指向此副本。Start Menu folder 是添加快捷方式的文件夹名称。使用 Browse... 选择新的 Apps 文件夹时，程序会询问是否也要将设置文件保存在该文件夹中。
+如果本程序本身是 exe，英文帮助内容会嵌入其中。首次启动时，会在 exe 旁边放置一份副本供编辑；该副本不会被替换，删除后会恢复内置文本。其他语言的帮助文件是放在 exe 旁边的普通文件。
+Settings file：显示本程序自身设置文件（python_compiler.json）的保存位置。初始位置与程序（exe 或此脚本）在同一文件夹中，绝不会放在临时文件夹内。Browse... 选择其他文件夹，Use Apps Folder 将设置文件移至 Compile Apps 文件夹，Default 将其移回程序文件夹。当前设置会保存到新位置，程序文件夹中会保留一条简短说明，指出设置文件的位置，以便下次启动时找到它。旧副本会保留在原处。如果启动时无法访问设置文件夹（例如网络驱动器不可用），程序会使用默认设置并保留该说明。
+颜色、密度和窗口大小设置位于 UI Choices。
+
+[tab:ui-choices]
+选择颜色主题、界面密度和窗口大小。Use Current Size 使用窗口当前大小；Apply + Save 应用并保存所选设置。列表条纹会遵循所选主题。这些设置控制应用程序的外观。文件夹和选项应在 Config 中设置。
+
+[tab:gateway]
+使用共享启动器打开已注册的应用程序、文件、文件夹和链接。它将卡片保存在程序文件夹中的 gateway_cards.json 文件内。Gateway 与提供 Gateway Apps 列表的 gateway 文件是分开的。
+

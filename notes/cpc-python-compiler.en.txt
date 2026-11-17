@@ -1,0 +1,21 @@
+# Python Compiler
+
+## Purpose
+Complete complie package
+
+## Features
+
+
+## Technology
+Python / Tkinter
+
+## System requirements
+Windows 10 or newer
+
+## Installation
+Download the ZIP release, extract it, and run the application.
+
+## Links
+https://github.com/bmulti/PythonCompiler
+
+File: cpc-python-compiler.en.txt

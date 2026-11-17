@@ -1,0 +1,33 @@
+{
+  "files": [
+    ".gitignore",
+    "INSTALL.md",
+    "README.md",
+    "Thumbs.db",
+    "copyright.txt",
+    "cpc_python_compiler-poster-01.png",
+    "cpc_python_compiler-poster-02.png",
+    "cpc_python_compiler.ar.txt",
+    "cpc_python_compiler.bn.txt",
+    "cpc_python_compiler.en.txt",
+    "cpc_python_compiler.es.txt",
+    "cpc_python_compiler.fr.txt",
+    "cpc_python_compiler.hi.txt",
+    "cpc_python_compiler.pt.txt",
+    "cpc_python_compiler.tabs.json",
+    "cpc_python_compiler.tl.txt",
+    "cpc_python_compiler.zh.txt",
+    "docs/en.html",
+    "docs/images/000-cpc_python_compiler-poster-01.png",
+    "docs/images/001-cpc_python_compiler-poster-02.png",
+    "docs/images/splash-000-python_compiler_spash.png",
+    "docs/index.html",
+    "docs/logo.png",
+    "docs/styles.css",
+    "logo.png",
+    "notes/cpc-python-compiler.en.txt",
+    "python_compiler_spash.png",
+    "python_compiler_workflow_infographic.png"
+  ],
+  "managed_by": "CPC GitHub Publisher"
+}

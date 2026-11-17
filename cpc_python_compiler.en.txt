@@ -1,0 +1,172 @@
+[intro]
+Python Compiler turns Python programs into Windows programs with PyInstaller,
+tests them, and publishes them. It follows one flow:
+
+Code Browser or Gateway Apps (the Python source) > Temp Compile (the build and
+test files) > Outputs (test, then publish) > Compile Apps (the finished apps,
+the Start Menu and the new gateway entry).
+
+Code Browser compiles Python files from any folder. Gateway Apps compiles the
+apps listed in your gateway file (gateway.json). Both lists let you read the code
+with a right click. Outputs tests what was built and publishes it. Log records
+everything that happens. The line at the bottom of the window always shows the
+last action and its result, the running job, and the Cancel buttons.
+
+Compiling is a batch job that runs in the background, so the window stays usable.
+Press Compile again while a job is running and the new job joins the queue.
+
+Start in Code Browser: pick a folder, select a Python file, and press Compile
+Selected. Then open Outputs to try the result, and publish it when you are happy.
+Set your folders in Config. Click any Notes heading to open its corresponding
+tab.
+
+[tab:code-browser]
+Compile Python files straight from a folder. Folder shows the current folder.
+Type a path or choose one of your recent folders from the drop-down. Browse...
+chooses a folder, Up moves to its parent, Default goes to the default folder set
+in Config, and Refresh reads the folder again. Only the files directly in the
+folder are listed. Every folder you open is added to the recent list
+automatically.
+
+Compile Selected compiles the selected files. Compile All Shown compiles every
+file in the list, so use Search first to narrow it down. One File packs each
+program into a single exe, Windowed hides the console window, Clean removes
+PyInstaller's old build files first, and No UPX skips the UPX compression step,
+which is slow and often only produces warnings. These four choices are shared
+with Gateway Apps. Only .py and .pyw files are compiled. Each press makes one job: if another
+job is running it waits its turn. Cancel Job stops the running job, and Cancel
+All also clears the queue.
+
+Type in Search to show only the files whose names contain that text; X clears the
+box. The .py / .pyw only box hides other kinds of file. The list shows the file
+name, when it was created and last modified, and its size. The most recently
+changed file is at the top; click a column heading to sort differently.
+
+If a Python file has an English help file beside it (name.en.txt, or the name
+without a cpc_ prefix), it is built into the exe, so the Notes tab of the
+compiled program always has its English text. The compile log shows
+"Embedding help".
+
+Right click a file to see code. A window opens with the code and line numbers.
+Copy All copies the whole text, Open File opens it in your usual editor, and
+Close (or the Esc key) shuts the window. A file over 1 MB shows only its first
+megabyte, and binary files are not shown. The preview cannot change the file.
+
+The CSV and HTML buttons at the top right export the files shown, in the order
+shown. A file is never overwritten; if the name is taken, the date and time are
+added to the new name.
+
+[tab:gateway-apps]
+Compile the apps listed in your gateway file (gateway.json). Only Python files
+(.py and .pyw) are shown. Reload Gateway reads the file again, and Project limits
+the list to one project, or All.
+
+Select one or more apps, then press Compile Selected. Compile All Shown compiles
+every app currently in the list. One File, Windowed, Clean and No UPX work as in
+Code Browser. Each compile is written to its own folder under the Temp Compile output
+root set in Config.
+
+Click a column heading to sort. Right click an app to see its code. The CSV and
+HTML buttons at the top right export the list exactly as it is shown, including
+your sort order.
+
+[tab:log]
+A running record of every job: when it was queued and started, each app's
+PyInstaller output (indented), how long each app took, and the result. Lines are
+marked with the job number, such as [Job 3 2/5], meaning the second of five apps
+in job 3.
+
+Each job is also saved as its own log file in the logs folder under the Temp
+Compile output root, and its path is shown when the job ends. Clear Log empties
+the window only. The window keeps the latest 5000 lines.
+
+[tab:outputs]
+The table lists what you have compiled in this session, from Code Browser or
+Gateway Apps: the app, its Python source, the executable result, the Result
+(Queued, Running, Compiled, Failed or Cancelled) and where it has been
+Published. Rows change as the job runs, and your sort order is kept.
+
+Test Selected PY runs the Python source and Test Selected EXE runs the compiled
+program from Temp Compile. They use the rows you select here; if none are
+selected, they use the files selected in the list you used last. Open Temp
+Compile shows the build folder in the file manager, and Clear Results empties the
+table. The CSV and HTML buttons export it.
+
+Test the exe first, then publish it. Both publish buttons work on the selected
+rows that show Compiled. Each one first copies the app into its own folder in
+Compile Apps, with the exe and its settings json. The settings json is copied
+from beside the Python file only if the app does not have one there yet, so
+settings you have already changed are never overwritten. Help files in other
+languages (name.fr.txt and so on) are copied beside the exe in the same way. They
+are external on purpose, so a language can be added or corrected without
+compiling again. The English help file is not copied because it is built into the
+exe. Then:
+
+Update Gateway replaces the Python file in gateway.json with the link to the
+copied exe. It asks first, keeps a backup called gateway.json.bak, and adds an
+entry if the app was not in the file. The Python source is kept in the entry
+as source_py, so the app stays in Gateway Apps and can be compiled again.
+
+Add Start Menu adds a shortcut to the copied exe in your Start Menu. The shortcut
+is named after the app (the app_name in the gateway entry, or the file name for
+a file from Code Browser), and is placed in the Start Menu folder set in Config.
+If the shortcut is already there it is updated.
+
+Run them again after a new build to update the same entries. If the copy fails,
+close the running app and try again. They run as jobs, like compiling, so they
+queue behind a running compile. Open Compile Apps shows the Compile Apps folder.
+
+[tab:config]
+Config follows the flow of the program, top to bottom. Save Settings at the
+bottom writes every setting to the settings file and shows where it was saved.
+
+Code Browser (raw folders): Default folder is the folder Code Browser opens
+first. Browse... chooses it and Use Current takes the folder Code Browser is
+showing now. Recent folders lists the folders you have used, newest first, and
+the last 15 are kept. Every folder you open in Code Browser is added
+automatically. Type or pick a folder and press Add to put it in the list, Remove
+to take it out, or Open to show it in Code Browser.
+
+Gateway (source list): the file that lists your apps for Gateway Apps. Browse...
+chooses it, Default goes back to gateway.json in the program's folder, and Reload
+reads it again. Nothing is compiled or copied here.
+
+Temp Compile: Output root is where the build, dist and spec folders and the job
+logs go, one folder per app. These are temporary files for testing, not the
+finished app. Python (PyInstaller) is the python.exe used to run PyInstaller and
+the Python tests. It is only needed when this program is itself an exe, because
+an exe cannot run PyInstaller. Leave it empty to use the Python found on the PATH.
+
+Compile Apps: Apps folder is where the finished apps live, each in its own folder
+with its exe and settings json. The Start Menu shortcut and the new gateway entry
+point to this copy. Start Menu folder is the name of the folder the shortcuts are
+added to. When you choose a new Apps folder with Browse..., you are asked
+whether to keep the settings file there too.
+
+When this program is itself an exe, its English help is built in. On the first
+start a copy is placed beside the exe so it can be edited; it is never replaced,
+and deleting it brings the built-in text back. Help in other languages is a plain
+file beside the exe.
+
+Settings file: shows where this program's own settings (python_compiler.json)
+are kept. They start in the same folder as the program (the exe, or this
+script), never in a temporary folder. Browse... chooses another folder, Use Apps
+Folder moves it to the Compile Apps folder, and Default moves it back to the
+program's folder. The current settings are saved in the new place and the
+program's folder keeps a small note saying where they are, so the next start
+finds them. The old copy is left where it was. If the settings folder is not
+available at start (for example a network drive), default settings are used and
+the note is kept.
+
+Colours, density and window size are in UI Choices.
+
+[tab:ui-choices]
+Choose the colour theme, density and window size. Use Current Size takes the size
+of the window as it is now, and Apply + Save applies and saves your choices. The
+list stripes follow the theme you choose. These settings control how the app
+looks. The folders and options belong in Config.
+
+[tab:gateway]
+Use the shared launcher to open registered applications, files, folders and
+links. It keeps its cards in gateway_cards.json in the program's folder. Gateway
+is separate from the gateway file that supplies the Gateway Apps list.

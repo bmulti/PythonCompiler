@@ -1,0 +1,71 @@
+[intro]
+Ginagawang Windows programs ng Python Compiler ang mga Python program gamit ang PyInstaller, sinusubukan ang mga ito, at inilalathala. Sinusunod nito ang daloy na ito:
+
+Code Browser o Gateway Apps (ang Python source code) > Temp Compile (mga build at test file) > Outputs (subukan, pagkatapos ay ilathala) > Compile Apps (mga tapos na app, Start Menu, at bagong Gateway entry).
+
+Nagko-compile ang Code Browser ng mga Python file mula sa anumang folder. Kino-compile ng Gateway Apps ang mga app na nakalista sa iyong gateway file (gateway.json). Sa dalawang listahan, maaari mong tingnan ang code sa pamamagitan ng right-click. Sinusubukan ng Outputs ang ginawa at inilalathala ito. Itinatala ng Log ang lahat ng nangyayari. Palaging ipinapakita ng linya sa ibaba ng window ang pinakahuling aksiyon at resulta nito, ang kasalukuyang trabaho, at ang mga Cancel button.
+
+Batch job ang pagko-compile na tumatakbo sa background, kaya magagamit pa rin ang window. Pindutin muli ang Compile habang may tumatakbong trabaho at idaragdag sa pila ang bagong trabaho.
+
+Magsimula sa Code Browser: pumili ng folder, pumili ng Python file, at pindutin ang Compile Selected. Pagkatapos, buksan ang Outputs upang subukan ang resulta at ilathala ito kapag nasiyahan ka na. Itakda ang iyong mga folder sa Config. I-click ang anumang Notes heading upang buksan ang katumbas na tab.
+
+[tab:code-browser]
+Mag-compile ng mga Python file nang direkta mula sa isang folder. Ipinapakita ng Folder ang kasalukuyang folder. Mag-type ng path o pumili ng isa sa iyong mga kamakailang folder mula sa drop-down list. Pumipili ng folder ang Browse..., binubuksan ng Up ang parent folder nito, ibinabalik ng Default ang default na folder na itinakda sa Config, at muling binabasa ng Refresh ang folder. Ang mga file na direktang nasa folder lamang ang ipinapakita. Awtomatikong idinaragdag sa recent list ang bawat folder na bubuksan mo.
+
+Kino-compile ng Compile Selected ang mga napiling file. Kino-compile ng Compile All Shown ang bawat file sa listahan, kaya gamitin muna ang Search upang paliitin ang listahan. Pinagsasama ng One File ang bawat program sa iisang exe, itinatago ng Windowed ang console window, inaalis muna ng Clean ang mga lumang build file ng PyInstaller, at nilalaktawan ng No UPX ang UPX compression step na mabagal at kadalasan ay mga babala lamang ang nalilikha. Pareho ang apat na pagpipiliang ito sa Gateway Apps. .py at .pyw file lamang ang kino-compile. Bawat pagpindot ay lumilikha ng isang trabaho: kung may ibang trabahong tumatakbo, maghihintay ito ng pagkakataon. Itinitigil ng Cancel Job ang tumatakbong trabaho, at nililinis din ng Cancel All ang pila.
+
+Mag-type sa Search upang ipakita lamang ang mga file na may ganoong teksto sa pangalan; nililinis ng X ang kahon. Itinatago ng .py / .pyw only box ang ibang uri ng file. Ipinapakita ng listahan ang pangalan ng file, petsa ng pagkakagawa at huling pagbabago, at laki nito. Nasa itaas ang pinakahuling binagong file; i-click ang heading ng column upang baguhin ang pagkakasunod-sunod.
+
+Kung may English help file sa tabi ng isang Python file (name.en.txt, o ang pangalan nito na walang cpc_ prefix), isinasama ito sa exe, kaya laging naroon ang English text sa Notes tab ng compiled program. Ipinapakita ng compile log ang "Embedding help".
+
+Mag-right-click sa isang file upang makita ang code. Bubukas ang window na may code at mga numero ng linya. Kinokopya ng Copy All ang buong teksto, binubuksan ng Open File ang file sa karaniwan mong editor, at isinasara ng Close (o Esc key) ang window. Kung lampas 1 MB ang file, unang megabyte lamang nito ang ipinapakita; hindi ipinapakita ang binary file. Hindi mababago ng preview ang file.
+
+Ini-export ng CSV at HTML button sa kanang itaas ang mga ipinapakitang file, ayon sa pagkakasunod ng mga ito. Hindi kailanman ino-overwrite ang isang file; kung ginagamit na ang pangalan, idaragdag ang petsa at oras sa bagong pangalan.
+
+[tab:gateway-apps]
+I-compile ang mga app na nakalista sa iyong gateway file (gateway.json). Python file lamang (.py at .pyw) ang ipinapakita. Muling binabasa ng Reload Gateway ang file, at nililimitahan ng Project ang listahan sa isang project o sa All.
+
+Pumili ng isa o higit pang app, pagkatapos ay pindutin ang Compile Selected. Kino-compile ng Compile All Shown ang lahat ng app na kasalukuyang nasa listahan. Gumagana ang One File, Windowed, Clean at No UPX gaya ng sa Code Browser. Isinusulat ang bawat compile sa sarili nitong folder sa ilalim ng Temp Compile output root na itinakda sa Config.
+
+I-click ang heading ng column upang ayusin ang pagkakasunod-sunod. Mag-right-click sa isang app upang makita ang code nito. Ini-export ng CSV at HTML button sa kanang itaas ang listahan nang eksakto sa ipinapakita nitong ayos, kasama ang piniling sort order.
+
+[tab:log]
+Talaan ng bawat trabaho: kung kailan ito inilagay sa pila at nagsimula, ang PyInstaller output ng bawat app (may indent), gaano katagal ang bawat app, at ang resulta. Minamarkahan ang mga linya ng numero ng trabaho, gaya ng [Job 3 2/5], na nangangahulugang ikalawa sa limang app sa job 3.
+
+Nai-save din ang bawat trabaho bilang sarili nitong log file sa logs folder sa ilalim ng Temp Compile output root, at ipinapakita ang path nito kapag natapos ang trabaho. Window lamang ang nililinis ng Clear Log. Pinananatili ng window ang pinakabagong 5000 linya.
+
+[tab:outputs]
+Inililista ng talahanayan ang mga na-compile mo sa session na ito mula sa Code Browser o Gateway Apps: ang app, ang Python source nito, ang nagawang executable, ang Result (Queued, Running, Compiled, Failed o Cancelled), at kung saan ito inilathala. Nagbabago ang mga row habang tumatakbo ang trabaho, at pinananatili ang napili mong sort order.
+
+Pinapatakbo ng Test Selected PY ang Python source at pinapatakbo ng Test Selected EXE ang compiled program mula sa Temp Compile. Ginagamit nila ang mga row na pinili mo rito; kung walang napili, ginagamit nila ang mga file na pinili sa huling listahang ginamit mo. Ipinapakita ng Open Temp Compile ang build folder sa file manager, at nililinis ng Clear Results ang talahanayan. Ini-export ito ng CSV at HTML button.
+
+Subukan muna ang exe, pagkatapos ay ilathala ito. Gumagana ang dalawang publish button sa mga napiling row na may Result na Compiled. Kokopyahin muna ng bawat isa ang app sa sarili nitong folder sa Compile Apps, kasama ang exe at settings json nito. Kokopyahin lamang ang settings json mula sa tabi ng Python file kung wala pa roon ang app, kaya hindi kailanman mao-overwrite ang mga setting na binago mo na. Kokopyahin din sa tabi ng exe ang mga help file sa ibang wika (name.fr.txt at iba pa) sa parehong paraan. Sadyang external ang mga ito upang makapagdagdag o makapagtama ng wika nang hindi muling nagko-compile. Hindi kinokopya ang English help file dahil kasama na ito sa exe. Pagkatapos:
+
+Pinapalitan ng Update Gateway ang Python file sa gateway.json ng link papunta sa kinopyang exe. Hihingi muna ito ng pahintulot, magtatago ng backup na gateway.json.bak, at magdaragdag ng entry kung wala pa sa file ang app. Pinananatili sa entry ang Python source bilang source_py, kaya mananatili ang app sa Gateway Apps at maaari itong muling i-compile.
+
+Nagdaragdag ang Add Start Menu ng shortcut papunta sa kinopyang exe sa iyong Start Menu. Ipinapangalan ang shortcut ayon sa app (app_name sa gateway entry, o pangalan ng file para sa file mula sa Code Browser), at inilalagay ito sa Start Menu folder na itinakda sa Config. Kung naroon na ang shortcut, ina-update ito.
+
+Patakbuhin muli ang mga ito pagkatapos ng bagong build upang ma-update ang parehong mga entry. Kung mabigo ang pagkopya, isara ang tumatakbong app at subukang muli. Tumatakbo ang mga ito bilang mga trabaho, gaya ng pagko-compile, kaya pumipila ang mga ito sa likod ng kasalukuyang compile. Ipinapakita ng Open Compile Apps ang Compile Apps folder.
+
+[tab:config]
+Sinusunod ng Config ang daloy ng programa mula itaas pababa. Isinusulat ng Save Settings sa ibaba ang lahat ng setting sa settings file at ipinapakita kung saan ito na-save.
+
+Code Browser (mga raw folder): ang Default folder ang unang folder na bubuksan ng Code Browser. Pinipili ito ng Browse... at ginagamit ng Use Current ang folder na kasalukuyang ipinapakita ng Code Browser. Inililista ng Recent folders ang mga folder na nagamit mo, pinakabago muna, at pinananatili ang huling 15. Awtomatikong idinaragdag ang bawat folder na bubuksan mo sa Code Browser. Mag-type o pumili ng folder at pindutin ang Add upang idagdag sa listahan, Remove upang alisin, o Open upang ipakita ito sa Code Browser.
+
+Gateway (source list): ang file na naglilista ng mga app para sa Gateway Apps. Pinipili ito ng Browse..., ibinabalik ng Default ang gateway.json sa folder ng programa, at muling binabasa ito ng Reload. Walang kino-compile o kinokopya rito.
+
+Temp Compile: ang Output root ang lokasyon ng build, dist at spec folder at ng mga job log, na may isang folder bawat app. Mga pansamantalang file ito para sa pagsubok, hindi ang tapos na app. Ang Python (PyInstaller) ang python.exe na ginagamit upang patakbuhin ang PyInstaller at ang Python tests. Kailangan lamang ito kapag exe mismo ang programang ito, dahil hindi kayang patakbuhin ng exe ang PyInstaller. Iwan itong blangko upang gamitin ang Python na nasa PATH.
+
+Compile Apps: ang Apps folder ang lokasyon ng mga tapos na app; bawat isa ay nasa sarili nitong folder kasama ang exe at settings json nito. Itinuturo ng Start Menu shortcut at bagong gateway entry ang kopyang ito. Ang Start Menu folder ang pangalan ng folder kung saan idinaragdag ang mga shortcut. Kapag pumili ka ng bagong Apps folder gamit ang Browse..., tatanungin ka kung pananatilihin din doon ang settings file.
+
+Kapag exe mismo ang programang ito, nakapaloob dito ang English help. Sa unang pagsisimula, inilalagay ang kopya sa tabi ng exe upang ma-edit; hindi ito kailanman pinapalitan, at kapag binura ito, babalik ang nakapaloob na teksto. Karaniwang file sa tabi ng exe ang help sa ibang wika.
+
+Settings file: ipinapakita kung saan iniingatan ang sariling settings ng programang ito (python_compiler.json). Nagsisimula ang mga ito sa parehong folder ng programa (ang exe o script na ito), hindi kailanman sa pansamantalang folder. Pumipili ng ibang folder ang Browse..., inililipat ito ng Use Apps Folder sa Compile Apps folder, at ibinabalik naman ito ng Default sa folder ng programa. Nasa bagong lokasyon ise-save ang kasalukuyang settings at mag-iiwan ang folder ng programa ng maikling tala kung nasaan ang mga ito, upang mahanap ng programa sa susunod na pagsisimula. Mananatili ang lumang kopya sa dati nitong lokasyon. Kung hindi available sa pagsisimula ang settings folder (halimbawa, network drive), gagamitin ang default settings at pananatilihin ang tala.
+
+Nasa UI Choices ang mga kulay, density at laki ng window.
+
+[tab:ui-choices]
+Piliin ang color theme, density at laki ng window. Kinukuha ng Use Current Size ang kasalukuyang laki ng window, at inilalapat at sine-save ng Apply + Save ang iyong mga pinili. Sinusunod ng mga guhit sa listahan ang napiling theme. Kinokontrol ng mga setting na ito ang hitsura ng app. Sa Config inilalagay ang mga folder at option.
+
+[tab:gateway]
+Gamitin ang shared launcher upang buksan ang mga rehistradong application, file, folder at link. Itinatago nito ang mga card sa gateway_cards.json sa folder ng programa. Hiwalay ang Gateway sa gateway file na nagbibigay ng listahan ng Gateway Apps.
